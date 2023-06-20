@@ -10,6 +10,13 @@ public class Film {
     this.lengthInMin = lengthInMin;
   }
 
+  public Film(String name, String producer, String genre, int lengthInMin) {
+    this.name = name;
+    this.producer = producer;
+    this.genre = genre;
+    this.lengthInMin = lengthInMin;
+  }
+
   public String getName() {
     return name;
   }
@@ -40,5 +47,28 @@ public class Film {
 
   public void setLengthInMin(int lengthInMin) {
     this.lengthInMin = lengthInMin;
+  }
+
+  @Override
+  public String toString() {
+    return "Film{" +
+        "name='" + name + '\'' +
+        ", producer='" + producer + '\'' +
+        ", genre='" + genre + '\'' +
+        ", lengthInMin=" + lengthInMin +
+        '}';
+  }
+
+  public String toStringPretty() {
+    return "" +
+        "Название фильма:" + name +
+        ", режиссер - " + producer +
+        ", жанр - " + genre +
+        ", длительность: " + lengthInMin + " мин";
+  }
+
+  public String toFile() {
+    String sep = Constants.SEP;
+    return name + sep + producer + sep + genre + sep + lengthInMin;
   }
 }
