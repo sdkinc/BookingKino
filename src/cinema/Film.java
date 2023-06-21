@@ -63,6 +63,10 @@ public class Film {
         '}';
   }
 
+  /***
+   * функция возвращает отформатированную строку для более красивого вывода на экран
+   * @return
+   */
   public String toStringPretty() {
     return "Название фильма - " + name +
         ", режиссер - " + producer +
@@ -70,17 +74,31 @@ public class Film {
         ", длительность: " + lengthInMin + " мин";
   }
 
+  /***
+   * Функция возвращает отформатированную строку для записи в файл с использованием разделителя
+   * @return
+   */
   public String toFile() {
     String sep = Constants.SEP;
     return name + sep + producer + sep + genre + sep + lengthInMin;
   }
 
+  /***
+   * Функция разбирает прочитанную из файла строку, и возвращает объект типа Film
+   * @param filmString
+   * @return
+   */
   public static Film parseFilmFromString(String filmString) {
     String[] strAfterSplit = filmString.split(Constants.SEP);
     return new Film(strAfterSplit[0], strAfterSplit[1], strAfterSplit[2],
         Integer.parseInt(strAfterSplit[3]));
   }
 
+  /***
+   * Функция работая со Scanner получает на вход форматированные данные от пользователя,
+   * и возвращает объект типа Film
+   * @return
+   */
   public static Film parseFilmFromScanner() {
     Scanner scanner = new Scanner((System.in));
     System.out.print("Введите наименование фильма:");

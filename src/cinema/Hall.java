@@ -37,6 +37,11 @@ public class Hall {
     this.sessions = sessions;
   }
 
+  /***
+   * Функция разбирает прочитанную из файла строку, и возвращает объект типа Hall
+   * @param hallString
+   * @return
+   */
   public static Hall parseHallFromString(String hallString) {
     int posSep = hallString.indexOf(Constants.SEP);
     return new Hall(hallString.substring(0, posSep),
