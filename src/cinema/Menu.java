@@ -19,6 +19,9 @@ public class Menu {
 
   private static final Map<String, String> descriptions = new LinkedHashMap<>();
 
+  /***
+   * Статическое заполнение меню
+   */
   static {
     descriptions.put(ADDFILM, "Добавить фильм");
     descriptions.put(ADDSESSION, "Добавить сеанс");
@@ -31,6 +34,9 @@ public class Menu {
 
   private static final Map<String, Runnable> actions = new LinkedHashMap<>();
 
+  /***
+   * Наполняем LinkedHashMap actions соответствующими командами меню и действиями.
+   */
   static {
     actions.put(ADDFILM, () -> {
       try {
@@ -59,14 +65,23 @@ public class Menu {
     actions.put(EXIT, () -> System.exit(0));
   }
 
+  /***
+   * Метод вызывает чтение данных из Scanner для нового сеанса, после чего создает новый сеанс,
+   * добавляет его в список сеансов и записывает в файл
+   * @throws IOException
+   * @throws ParseException
+   */
   private static void addSessionFromScanner() throws IOException, ParseException {
-    Scanner scanner1 = new Scanner(System.in);
+    Scanner scanner = new Scanner(System.in);
     List<Session> sessionList = Constants.cinema.getCinemaHall().get(0).getSessions();
-    Session newSession = Session.parseSessionFromScanner(scanner1);
+    Session newSession = Session.parseSessionFromScanner(scanner);
     sessionList.add(newSession);
     Files.writeObjectToFile(newSession);
   }
 
+  /***
+   * Метод выводит на экран список фильмов в отформатированном виде
+   */
   private static void printPrettyFilmList() {
     System.out.println();
     System.out.println("Выполняется команда показать список фильмов");
@@ -78,6 +93,9 @@ public class Menu {
     }
   }
 
+  /***
+   * Метод выводит меню на экран
+   */
   private static void printMenu() {
     System.out.println();
     System.out.println("\t\t\tМеню:\t\t\t");
@@ -86,6 +104,10 @@ public class Menu {
     }
   }
 
+  /***
+   * Метод выполняет чтение команды с клавиатуры с проверкой ввода и выводом меню
+   * @return
+   */
   public static String read() {
     printMenu();
     Scanner scanner = new Scanner(System.in);
@@ -99,6 +121,10 @@ public class Menu {
     return command;
   }
 
+  /***
+   * Метод вызывает действие для команды, которая ему на вход передана
+   * @param command
+   */
   public static void apply(String command) {
     if (!actions.containsKey(command)) {
       throw new IllegalArgumentException("Некорректная команда: " + command);
@@ -106,6 +132,9 @@ public class Menu {
     actions.get(command).run();
   }
 
+  /***
+   * Метод показывает список сеансов и после выбора пользователя показывает карту мест сеанса
+   */
   public static void askSessionAndPrintPlaces() {
     System.out.println();
     System.out.println("Выполняется команда показать места на сеанс");
@@ -120,6 +149,11 @@ public class Menu {
     current.printMapPlaces();
   }
 
+  /***
+   * Метод вызывает чтение нового фильма из сканера в новый объект,
+   * после чего добавляет его в список фильмов
+   * @throws IOException
+   */
   public static void readAndParseAndAddFilmFromScanner() throws IOException {
     Film newFilm = Film.parseFilmFromScanner();
     List<Film> filmList = Constants.cinema.getFilms();
@@ -128,6 +162,9 @@ public class Menu {
     Files.writeObjectToFile(newFilm);
   }
 
+  /***
+   * Метод выводит наименование команды и вызывает действие для этой команды
+   */
   private static void printSessionList() {
     System.out.println();
     System.out.println("Выполняется команда показать сеансы");
@@ -136,6 +173,9 @@ public class Menu {
     printSessionListWithoutMessage();
   }
 
+  /***
+   * Метод выполняет получение списка сеансов и вывод на экран в приятно оформленном виде
+   */
   private static void printSessionListWithoutMessage() {
     List<Session> sessions = Constants.cinema.getCinemaHall().get(0).getSessions();
     int j = 1;
