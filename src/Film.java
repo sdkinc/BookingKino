@@ -79,7 +79,7 @@ public class Film {
         Integer.parseInt(strAfterSplit[3]));
   }
 
-  public static Film parseFilmFromScanner(){
+  public static Film parseFilmFromScanner() {
     Scanner scanner = new Scanner((System.in));
     System.out.print("Введите наименование фильма:");
     String nameFilm = scanner.nextLine();

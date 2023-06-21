@@ -103,6 +103,7 @@ public class Menu {
     }
     actions.get(command).run();
   }
+
   public static void askSessionAndPrintPlaces() {
     System.out.println();
     System.out.println("Выполняется команда показать места на сеанс");

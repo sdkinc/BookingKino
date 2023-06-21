@@ -50,7 +50,7 @@ public class Session {
   }
 
   public String toStringPretty() {
-    return "дата сеанса - " + dateStart+"\n\t\t\t\t\t\t"
+    return "дата сеанса - " + dateStart + "\n\t\t\t\t\t\t"
         + film.toStringPretty()
         ;
   }
