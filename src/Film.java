@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Film {
 
   private String name;
@@ -60,8 +62,7 @@ public class Film {
   }
 
   public String toStringPretty() {
-    return "" +
-        "Название фильма:" + name +
+    return "Название фильма - " + name +
         ", режиссер - " + producer +
         ", жанр - " + genre +
         ", длительность: " + lengthInMin + " мин";
@@ -70,5 +71,24 @@ public class Film {
   public String toFile() {
     String sep = Constants.SEP;
     return name + sep + producer + sep + genre + sep + lengthInMin;
+  }
+
+  static Film parseFilmFromString(String filmString) {
+    String[] strAfterSplit = filmString.split(Constants.SEP);
+    return new Film(strAfterSplit[0], strAfterSplit[1], strAfterSplit[2],
+        Integer.parseInt(strAfterSplit[3]));
+  }
+
+  public static Film parseFilmFromScanner(){
+    Scanner scanner = new Scanner((System.in));
+    System.out.print("Введите наименование фильма:");
+    String nameFilm = scanner.nextLine();
+    System.out.print("Введите длительность фильма:");
+    int lengthFilm = Integer.parseInt(scanner.nextLine());
+    System.out.print("Введите жанр фильма:");
+    String genreFilm = scanner.nextLine();
+    System.out.print("Введите режиссера фильма:");
+    String producerFilm = scanner.nextLine();
+    return new Film(nameFilm, producerFilm, genreFilm, lengthFilm);
   }
 }
