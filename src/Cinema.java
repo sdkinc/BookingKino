@@ -1,14 +1,12 @@
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 public class Cinema {
 
   private String name;
   private List<Hall> hall;
-  private Map<Date, Film> films;
+  private List<Film> films;
 
-  public Cinema(String name, List<Hall> hall, Map<Date, Film> films) {
+  public Cinema(String name, List<Hall> hall, List<Film> films) {
     this.name = name;
     this.hall = hall;
     this.films = films;
@@ -30,11 +28,12 @@ public class Cinema {
     this.hall = hall;
   }
 
-  public Map<Date, Film> getFilms() {
+  public List<Film> getFilms() {
     return films;
   }
 
-  public void setFilms(Map<Date, Film> films) {
+  public void setFilms(List<Film> films) {
     this.films = films;
   }
+
 }
