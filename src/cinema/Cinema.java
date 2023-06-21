@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Cinema {
 
-  private String name;
+  private final String name;
   private List<Hall> hall;
   private List<Film> films;
 
@@ -16,10 +16,6 @@ public class Cinema {
 
   public String getName() {
     return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   public List<Hall> getCinemaHall() {
