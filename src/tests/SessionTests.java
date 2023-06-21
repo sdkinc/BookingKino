@@ -121,7 +121,6 @@ public class SessionTests {
       places.add(row);
     }
 
-    String sep = Constants.SEP;
     String expected = film + Constants.SEP +
         Constants.formatter.format(dateStart) + Constants.SEP +
         Session.placesToText(places);
