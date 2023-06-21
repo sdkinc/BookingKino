@@ -11,6 +11,10 @@ public class Session {
   private Film film;
   private Date dateStart;
   private List<List<Integer>> places;
+  // Количество рядов в зале по умолчанию
+  private static int DEFAULT_ROWS = 2;
+  // Количество кресел в ряду по умолчанию
+  private static int DEFAULT_PLACES_IN_ROW = 16;
 
   public Session(Film film, Date dateStart, List<List<Integer>> places) {
     this.film = film;
@@ -51,18 +55,31 @@ public class Session {
         '}';
   }
 
+  /***
+   * функция возвращает отформатированную строку для более красивого вывода на экран
+   * @return
+   */
   public String toStringPretty() {
     return "дата сеанса - " + dateStart + "\n\t\t\t\t\t\t"
         + film.toStringPretty()
         ;
   }
 
+  /***
+   * Функция возвращает отформатированную строку для записи в файл с использованием разделителя
+   * @return
+   */
   public String toFile() {
     return film + Constants.SEP +
         Constants.formatter.format(dateStart) + Constants.SEP +
         placesToText(places);
   }
 
+  /***
+   * Функция возвращает отформатированную строку для записи в файл с использованием разделителя
+   * @param places
+   * @return
+   */
   public static String placesToText(List<List<Integer>> places) {
     StringBuilder result = new StringBuilder();
     for (List<Integer> row : places) {
@@ -75,6 +92,9 @@ public class Session {
     return result.toString();
   }
 
+  /***
+   * Метод выводит на экран карту свободных занятых мест в сеансе.
+   */
   public void printMapPlaces() {
     System.out.println();
 
@@ -110,6 +130,12 @@ public class Session {
     System.out.println("+++++++++++++++++++++++++++++++++++++");
   }
 
+  /***
+   * Функция читает из строки места и возвращает в виде объекта List<List<Integer>>, где занятые
+   * места обозначаются как 1, а свободные как 0
+   * @param string
+   * @return
+   */
   private static List<List<Integer>> readPlacesFromStringToListList(String string) {
     String[] arrayString = string.split(Constants.SEP_PLACES);
     List<List<Integer>> places = new ArrayList<>();
@@ -124,14 +150,25 @@ public class Session {
     return places;
   }
 
-  static Session parseSessionFromString(String filmString) throws ParseException {
-    String[] strAfterSplit = filmString.split(Constants.SEP);
+  /***
+   * Функция читает из переданной на вход строки сеанс и возвращает в виде объекта Session
+   * @param sessionString
+   * @return
+   * @throws ParseException
+   */
+  static Session parseSessionFromString(String sessionString) throws ParseException {
+    String[] strAfterSplit = sessionString.split(Constants.SEP);
     Date dateSession = Constants.formatter.parse(strAfterSplit[1]);
     Film film = Constants.cinema.getFilms().get(Integer.parseInt(strAfterSplit[0]));
     return new Session(film, dateSession,
         readPlacesFromStringToListList(strAfterSplit[2]));
   }
 
+  /***
+   * Функция читает из сканера входные данные и возвращает объект Session
+   * @param scanner
+   * @return
+   */
   public static Session parseSessionFromScanner(Scanner scanner) {
     String inputMessageDate = "Введите дату и время сеанса в формате (\"dd-MM-yyyy HH:mm\"):";
     System.out.print(inputMessageDate);
@@ -154,11 +191,18 @@ public class Session {
     }
     int indexFilm = scanner.nextInt() - 1;
     Film film = filmList.get(indexFilm);
-    List<List<Integer>> places = getEmptyMapPlaces(2,16);
+    List<List<Integer>> places = getEmptyMapPlaces(DEFAULT_ROWS, DEFAULT_PLACES_IN_ROW);
     return new Session(film, sessionDate, places);
   }
 
-  private static List<List<Integer>> getEmptyMapPlaces(int rows, int placesInRow){
+  /***
+   * Функция генерирует карту мест зала с предзаполненнными пустыми значениями
+   * (т.е. на старте все места свободны)
+   * @param rows
+   * @param placesInRow
+   * @return
+   */
+  private static List<List<Integer>> getEmptyMapPlaces(int rows, int placesInRow) {
     List<List<Integer>> result = new ArrayList<>();
     for (int i = 0; i < rows; i++) {
       List<Integer> row = new ArrayList<>();
