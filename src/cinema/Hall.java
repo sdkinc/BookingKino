@@ -1,3 +1,5 @@
+package cinema;
+
 import java.util.List;
 
 public class Hall {
@@ -35,7 +37,7 @@ public class Hall {
     this.sessions = sessions;
   }
 
-  static Hall parseHallFromString(String hallString) {
+  public static Hall parseHallFromString(String hallString) {
     int posSep = hallString.indexOf(Constants.SEP);
     return new Hall(hallString.substring(0, posSep),
         Integer.parseInt(hallString.substring(posSep + 1)));

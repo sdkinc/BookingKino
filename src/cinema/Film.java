@@ -1,3 +1,5 @@
+package cinema;
+
 import java.util.Scanner;
 
 public class Film {
@@ -73,7 +75,7 @@ public class Film {
     return name + sep + producer + sep + genre + sep + lengthInMin;
   }
 
-  static Film parseFilmFromString(String filmString) {
+  public static Film parseFilmFromString(String filmString) {
     String[] strAfterSplit = filmString.split(Constants.SEP);
     return new Film(strAfterSplit[0], strAfterSplit[1], strAfterSplit[2],
         Integer.parseInt(strAfterSplit[3]));

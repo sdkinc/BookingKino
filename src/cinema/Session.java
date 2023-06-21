@@ -1,3 +1,5 @@
+package cinema;
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -61,7 +63,7 @@ public class Session {
         placesToText(places);
   }
 
-  private static String placesToText(List<List<Integer>> places) {
+  public static String placesToText(List<List<Integer>> places) {
     StringBuilder result = new StringBuilder();
     for (List<Integer> row : places) {
       for (Integer integer : row) {
@@ -152,7 +154,19 @@ public class Session {
     }
     int indexFilm = scanner.nextInt() - 1;
     Film film = filmList.get(indexFilm);
-    List<List<Integer>> places = new ArrayList<>();
+    List<List<Integer>> places = getEmptyMapPlaces(2,16);
     return new Session(film, sessionDate, places);
+  }
+
+  private static List<List<Integer>> getEmptyMapPlaces(int rows, int placesInRow){
+    List<List<Integer>> result = new ArrayList<>();
+    for (int i = 0; i < rows; i++) {
+      List<Integer> row = new ArrayList<>();
+      for (int j = 0; j < placesInRow; j++) {
+        row.add(0);
+      }
+      result.add(row);
+    }
+    return result;
   }
 }

@@ -1,3 +1,5 @@
+package cinema;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -29,7 +31,7 @@ public class Files {
     fileWriter.close();
   }
 
-  static List<Session> readSessionsFromFile() throws IOException, ParseException {
+  public static List<Session> readSessionsFromFile() throws IOException, ParseException {
     Scanner scanner = new Scanner(new FileReader(Constants.SESSIONS_FILENAME));
     checkExistFile(Constants.SESSIONS_FILENAME);
     List<Session> result = new ArrayList<>();
@@ -68,8 +70,8 @@ public class Files {
     return result;
   }
 
-  static Cinema readCinemaFromFile() throws IOException {
-    return new Cinema("Cinemax AIT entertainment", Files.readHallFromFile(),
+  public static Cinema readCinemaFromFile() throws IOException {
+    return new Cinema(Constants.NAME_CINEMA, Files.readHallFromFile(),
         Files.readFilmsFromFile());
   }
 }
