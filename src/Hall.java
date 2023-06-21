@@ -1,11 +1,10 @@
-import java.util.Date;
-import java.util.Map;
+import java.util.List;
 
 public class Hall {
 
   private String name;
   private double price;
-  private Map<Date, Session> sessions;
+  private List<Session> sessions;
 
   public Hall(String name, double price) {
     this.name = name;
@@ -28,11 +27,17 @@ public class Hall {
     this.price = price;
   }
 
-  public Map<Date, Session> getSessions() {
+  public List<Session> getSessions() {
     return sessions;
   }
 
-  public void setSessions(Map<Date, Session> sessions) {
+  public void setSessions(List<Session> sessions) {
     this.sessions = sessions;
+  }
+
+  static Hall parseHallFromString(String hallString) {
+    int posSep = hallString.indexOf(Constants.SEP);
+    return new Hall(hallString.substring(0, posSep),
+        Integer.parseInt(hallString.substring(posSep + 1)));
   }
 }
