@@ -26,7 +26,7 @@ public class CinemaTests {
     int price = 50;
     Hall hall = new Hall(nameHall,price);
     List<Hall> hallList = new ArrayList<>();
-
+    hallList.add(hall);
     String nameCinema = Constants.NAME_CINEMA;
     //act
     Cinema actual = new Cinema(nameCinema,hallList,filmList);
