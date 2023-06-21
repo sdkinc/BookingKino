@@ -1,5 +1,8 @@
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 public class Session {
 
@@ -46,6 +49,12 @@ public class Session {
         '}';
   }
 
+  public String toStringPretty() {
+    return "дата сеанса - " + dateStart+"\n\t\t\t\t\t\t"
+        + film.toStringPretty()
+        ;
+  }
+
   public String toFile() {
     return film + Constants.SEP +
         Constants.formatter.format(dateStart) + Constants.SEP +
@@ -53,16 +62,15 @@ public class Session {
   }
 
   private static String placesToText(List<List<Integer>> places) {
-    String result = "";
-    for (int i = 0; i < places.size(); i++) {
-      List<Integer> row = places.get(i);
-      for (int j = 0; j < row.size(); j++) {
-        result += row.get(j);
+    StringBuilder result = new StringBuilder();
+    for (List<Integer> row : places) {
+      for (Integer integer : row) {
+        result.append(integer);
       }
-      result += Constants.SEP_PLACES;
+      result.append(Constants.SEP_PLACES);
     }
-    result = result.substring(0, result.length() - 1);
-    return result;
+    result = new StringBuilder(result.substring(0, result.length() - 1));
+    return result.toString();
   }
 
   public void printMapPlaces() {
@@ -87,8 +95,7 @@ public class Session {
         int i = 0; i < places.size(); i++) {
       System.out.print("Ряд " + (i + 1) + ": \t");
       List<Integer> row = places.get(i);
-      for (int j = 0; j < row.size(); j++) {
-        int free = row.get(j);
+      for (int free : row) {
         if (free == 0) {
           System.out.print("R");
         } else {
@@ -99,5 +106,53 @@ public class Session {
       System.out.println();
     }
     System.out.println("+++++++++++++++++++++++++++++++++++++");
+  }
+
+  private static List<List<Integer>> readPlacesFromStringToListList(String string) {
+    String[] arrayString = string.split(Constants.SEP_PLACES);
+    List<List<Integer>> places = new ArrayList<>();
+    for (int i = 0; i < arrayString.length; i++) {
+      String[] rowString = arrayString[i].split("");
+      List<Integer> row = new ArrayList<>();
+      for (int j = 0; j < rowString.length; j++) {
+        row.add(j, Integer.parseInt(rowString[j]));
+      }
+      places.add(i, row);
+    }
+    return places;
+  }
+
+  static Session parseSessionFromString(String filmString) throws ParseException {
+    String[] strAfterSplit = filmString.split(Constants.SEP);
+    Date dateSession = Constants.formatter.parse(strAfterSplit[1]);
+    Film film = Constants.cinema.getFilms().get(Integer.parseInt(strAfterSplit[0]));
+    return new Session(film, dateSession,
+        readPlacesFromStringToListList(strAfterSplit[2]));
+  }
+
+  public static Session parseSessionFromScanner(Scanner scanner) {
+    String inputMessageDate = "Введите дату и время сеанса в формате (\"dd-MM-yyyy HH:mm\"):";
+    System.out.print(inputMessageDate);
+    Date sessionDate = new Date();
+    boolean successReadData = false;
+    while (!successReadData) {
+      try {
+        sessionDate = Constants.formatter.parse(scanner.nextLine());
+        successReadData = true;
+      } catch (ParseException p) {
+        System.out.println(p);
+        System.out.print(inputMessageDate);
+      }
+    }
+    System.out.println("Введите номер фильма:");
+
+    List<Film> filmList = Constants.cinema.getFilms();
+    for (int i = 1; i < filmList.size() + 1; i++) {
+      System.out.println("# \t" + i + " = " + filmList.get(i - 1));
+    }
+    int indexFilm = scanner.nextInt() - 1;
+    Film film = filmList.get(indexFilm);
+    List<List<Integer>> places = new ArrayList<>();
+    return new Session(film, sessionDate, places);
   }
 }
