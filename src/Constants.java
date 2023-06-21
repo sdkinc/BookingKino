@@ -6,5 +6,5 @@ public class Constants {
   public final static String SEP_PLACES = "\\|";
   public static final String FILMS_FILENAME = "res/FilmList.csv";
   public static final String SESSIONS_FILENAME = "res/SessionList.csv";
-
+  public static Cinema cinema = null;
 }
