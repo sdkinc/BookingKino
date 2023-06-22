@@ -10,6 +10,7 @@ public class Constants {
   public final static String SEP = ";";
   //SEP_PLACES разделитель рядов в поле с данными по местам в файле
   public final static String SEP_PLACES = "\\|";
+  public final static String SEP_PLACES_FOR_WRITE = "|";
   //FILMS_FILENAME путь к файлу с фильмами
   public static final String FILMS_FILENAME = "res/FilmList.csv";
   //SESSIONS_FILENAME путь к файлу с сеансами
