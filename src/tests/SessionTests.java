@@ -22,6 +22,7 @@ public class SessionTests {
     String genre = "Фантастика/Комедія";
     int lengthInMin = 69;
     int id = 1;
+    int sessionId = 1;
     Film film = new Film(name, producer, genre, lengthInMin, id);
     Date dateStart = Constants.formatter.parse("24-06-2023 11:00");
     int rows = 2;
@@ -36,7 +37,7 @@ public class SessionTests {
     }
 
     // arrange & act
-    Session session = new Session(film, dateStart, places);
+    Session session = new Session(film, dateStart, places, sessionId);
     // assert
     assertEquals(dateStart, session.getDateStart());
     assertEquals(places, session.getPlaces());
@@ -51,6 +52,7 @@ public class SessionTests {
     String genre = "Фантастика/Комедія";
     int lengthInMin = 69;
     int id = 1;
+    int sessionId = 1;
     Film film = new Film(name, producer, genre, lengthInMin, id);
     Date dateStart = Constants.formatter.parse("24-06-2023 11:00");
     int rows = 2;
@@ -70,7 +72,7 @@ public class SessionTests {
         ", places=" + places +
         '}';
     // arrange & act
-    Session session = new Session(film, dateStart, places);
+    Session session = new Session(film, dateStart, places, sessionId);
     //assert
     assertEquals(expected, session.toString());
   }
@@ -83,6 +85,7 @@ public class SessionTests {
     String genre = "Фантастика/Комедія";
     int lengthInMin = 69;
     int id = 1;
+    int sessionId = 1;
     Film film = new Film(name, producer, genre, lengthInMin, id);
     Date dateStart = Constants.formatter.parse("24-06-2023 11:00");
     int rows = 2;
@@ -99,7 +102,7 @@ public class SessionTests {
     String expected = "дата сеанса - " + dateStart + "\n\t\t\t\t\t\t"
         + film.toStringPretty();
     // arrange & act
-    Session session = new Session(film, dateStart, places);
+    Session session = new Session(film, dateStart, places,sessionId);
     //assert
     assertEquals(expected, session.toStringPretty());
   }
@@ -112,6 +115,7 @@ public class SessionTests {
     String genre = "Фантастика/Комедія";
     int lengthInMin = 69;
     int id = 1;
+    int sessionId = 1;
     Film film = new Film(name, producer, genre, lengthInMin, id);
     Date dateStart = Constants.formatter.parse("24-06-2023 11:00");
     int rows = 2;
@@ -125,11 +129,11 @@ public class SessionTests {
       places.add(row);
     }
 
-    String expected = film.getId() + Constants.SEP +
+    String expected = sessionId+ Constants.SEP+film.getId() + Constants.SEP +
         Constants.formatter.format(dateStart) + Constants.SEP +
         Session.placesToText(places);
     // arrange & act
-    Session session = new Session(film, dateStart, places);
+    Session session = new Session(film, dateStart, places, sessionId);
     //assert
     assertEquals(expected, session.toFile());
   }

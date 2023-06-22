@@ -18,12 +18,14 @@ public class Session {
   // Количество кресел в ряду по умолчанию
   private static int DEFAULT_PLACES_IN_ROW = 16;
 
-  public Session(Film film, Date dateStart, List<List<Integer>> places) {
+  public Session(Film film, Date dateStart, List<List<Integer>> places, int id) {
     this.film = film;
     this.dateStart = dateStart;
     this.places = places;
-    this.id = maxId;
-    maxId++;
+    this.id = id;
+    if(id==maxId){
+      maxId++;
+    }
   }
 
   public Film getFilm() {
@@ -170,10 +172,11 @@ public class Session {
    */
   static Session parseSessionFromString(String sessionString) throws ParseException {
     String[] strAfterSplit = sessionString.split(Constants.SEP);
+    int id = Integer.parseInt(strAfterSplit[0]);
     Date dateSession = Constants.formatter.parse(strAfterSplit[2]);
     Film film = Constants.cinema.getFilms().get(Integer.parseInt(strAfterSplit[1]));
     return new Session(film, dateSession,
-        readPlacesFromStringToListList(strAfterSplit[3]));
+        readPlacesFromStringToListList(strAfterSplit[3]), id);
   }
 
   /***
@@ -204,7 +207,7 @@ public class Session {
     int indexFilm = scanner.nextInt() - 1;
     Film film = filmList.get(indexFilm);
     List<List<Integer>> places = getEmptyMapPlaces(DEFAULT_ROWS, DEFAULT_PLACES_IN_ROW);
-    return new Session(film, sessionDate, places);
+    return new Session(film, sessionDate, places, Session.getMaxId()+1);
   }
 
   /***
