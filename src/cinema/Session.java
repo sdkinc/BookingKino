@@ -119,9 +119,9 @@ public class Session {
       List<Integer> row = places.get(i);
       for (int free : row) {
         if (free == 0) {
-          System.out.print("R");
-        } else {
           System.out.print("F");
+        } else {
+          System.out.print("R");
         }
         System.out.print(" \t");
       }
@@ -212,5 +212,10 @@ public class Session {
       result.add(row);
     }
     return result;
+  }
+  public void reservePlaceInSession(int rowIndex, int placeIndex){
+    List<Integer> row = places.get(rowIndex);
+    row.remove(placeIndex);
+    row.add(placeIndex,1);
   }
 }
