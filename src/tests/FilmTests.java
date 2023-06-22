@@ -14,9 +14,10 @@ public class FilmTests {
     String producer = "Олександр Роу";
     String genre = "Фантастика/Комедія";
     int lengthInMin = 69;
-
+    int id = 1;
     // arrange & act
-    Film film = new Film(name,producer,genre,lengthInMin);
+
+    Film film = new Film(name,producer,genre,lengthInMin, id);
     // assert
     assertEquals(name, film.getName());
     assertEquals(producer, film.getProducer());
@@ -30,6 +31,7 @@ public class FilmTests {
     String producer = "Олександр Роу";
     String genre = "Фантастика/Комедія";
     int lengthInMin = 69;
+    int id = 1;
     String expected = "Film{" +
         "name='" + name + '\'' +
         ", producer='" + producer + '\'' +
@@ -37,7 +39,7 @@ public class FilmTests {
         ", lengthInMin=" + lengthInMin +
         '}';
     // arrange & act
-    Film film = new Film(name,producer,genre,lengthInMin);
+    Film film = new Film(name,producer,genre,lengthInMin, id);
 
     // assert
     assertEquals(expected, film.toString());
@@ -50,12 +52,13 @@ public class FilmTests {
     String producer = "Олександр Роу";
     String genre = "Фантастика/Комедія";
     int lengthInMin = 69;
+    int id = 1;
     String expected = "Название фильма - " + name +
         ", режиссер - " + producer +
         ", жанр - " + genre +
         ", длительность: " + lengthInMin + " мин";
     // arrange & act
-    Film film = new Film(name,producer,genre,lengthInMin);
+    Film film = new Film(name,producer,genre,lengthInMin, id);
 
     // assert
     assertEquals(expected, film.toStringPretty());
@@ -68,12 +71,13 @@ public class FilmTests {
     String producer = "Олександр Роу";
     String genre = "Фантастика/Комедія";
     int lengthInMin = 69;
+    int id = 1;
     String sep = Constants.SEP;
 
     String expected = name + sep + producer + sep + genre + sep + lengthInMin;
 
     // arrange & act
-    Film film = new Film(name,producer,genre,lengthInMin);
+    Film film = new Film(name,producer,genre,lengthInMin, id);
 
     // assert
     assertEquals(expected, film.toFile());

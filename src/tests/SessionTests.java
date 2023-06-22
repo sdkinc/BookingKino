@@ -21,7 +21,8 @@ public class SessionTests {
     String producer = "Олександр Роу";
     String genre = "Фантастика/Комедія";
     int lengthInMin = 69;
-    Film film = new Film(name, producer, genre, lengthInMin);
+    int id = 1;
+    Film film = new Film(name, producer, genre, lengthInMin, id);
     Date dateStart = Constants.formatter.parse("24-06-2023 11:00");
     int rows = 2;
     int placesInRow = 16;
@@ -49,7 +50,8 @@ public class SessionTests {
     String producer = "Олександр Роу";
     String genre = "Фантастика/Комедія";
     int lengthInMin = 69;
-    Film film = new Film(name, producer, genre, lengthInMin);
+    int id = 1;
+    Film film = new Film(name, producer, genre, lengthInMin, id);
     Date dateStart = Constants.formatter.parse("24-06-2023 11:00");
     int rows = 2;
     int placesInRow = 16;
@@ -80,7 +82,8 @@ public class SessionTests {
     String producer = "Олександр Роу";
     String genre = "Фантастика/Комедія";
     int lengthInMin = 69;
-    Film film = new Film(name, producer, genre, lengthInMin);
+    int id = 1;
+    Film film = new Film(name, producer, genre, lengthInMin, id);
     Date dateStart = Constants.formatter.parse("24-06-2023 11:00");
     int rows = 2;
     int placesInRow = 16;
@@ -108,7 +111,8 @@ public class SessionTests {
     String producer = "Олександр Роу";
     String genre = "Фантастика/Комедія";
     int lengthInMin = 69;
-    Film film = new Film(name, producer, genre, lengthInMin);
+    int id = 1;
+    Film film = new Film(name, producer, genre, lengthInMin, id);
     Date dateStart = Constants.formatter.parse("24-06-2023 11:00");
     int rows = 2;
     int placesInRow = 16;
@@ -121,7 +125,7 @@ public class SessionTests {
       places.add(row);
     }
 
-    String expected = film + Constants.SEP +
+    String expected = film.getId() + Constants.SEP +
         Constants.formatter.format(dateStart) + Constants.SEP +
         Session.placesToText(places);
     // arrange & act

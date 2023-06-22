@@ -19,7 +19,8 @@ public class CinemaTests {
     String producer = "Олександр Роу";
     String genre = "Фантастика/Комедія";
     int lengthInMin = 69;
-    Film film = new Film(nameFilm,producer,genre,lengthInMin);
+    int id = 1;
+    Film film = new Film(nameFilm,producer,genre,lengthInMin, id);
     List<Film> filmList = new ArrayList<>();
     filmList.add(film);
     String nameHall = "RED";
