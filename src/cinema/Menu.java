@@ -62,6 +62,13 @@ public class Menu {
         Menu::printSessionList);
     actions.put(PRINTSESSIONPLACES, Menu::askSessionAndPrintPlaces);
     actions.put(PRINTFILMLIST, Menu::printPrettyFilmList);
+    actions.put(BOOKTICKET, () -> {
+      try {
+        bookTicket();
+      } catch (IOException | ParseException e) {
+        throw new RuntimeException(e);
+      }
+    });
     actions.put(EXIT, () -> System.exit(0));
   }
 
@@ -141,8 +148,9 @@ public class Menu {
     System.out.println();
 
     Scanner scanner = new Scanner(System.in);
-    printSessionListWithoutMessage();
+
     List<Session> sessions = Constants.cinema.getCinemaHall().get(0).getSessions();
+    printSessionListWithoutMessage(sessions);
     System.out.println("Выберите сеанс:");
     int i = scanner.nextInt();
     Session current = sessions.get(i - 1);
@@ -170,18 +178,53 @@ public class Menu {
     System.out.println("Выполняется команда показать сеансы");
     System.out.println();
 
-    printSessionListWithoutMessage();
+    printSessionListWithoutMessage(Constants.cinema.getCinemaHall().get(0).getSessions());
   }
 
   /***
    * Метод выполняет получение списка сеансов и вывод на экран в приятно оформленном виде
    */
-  private static void printSessionListWithoutMessage() {
-    List<Session> sessions = Constants.cinema.getCinemaHall().get(0).getSessions();
+  private static void printSessionListWithoutMessage(List<Session> sessions) {
     int j = 1;
     for (Session s : sessions) {
       System.out.println("#" + j + ". " + s.toStringPretty());
       j++;
     }
+  }
+
+  public static void bookTicket() throws IOException, ParseException {
+    System.out.println();
+    System.out.println("Выполняется команда продажа билета ");
+    System.out.println();
+
+    Scanner scanner = new Scanner(System.in);
+    List<Session> sessions = Constants.cinema.getCinemaHall().get(0).getSessions();
+    printSessionListWithoutMessage(sessions);
+    int sessionNumber = scanner.nextInt();
+    Session currentSession = sessions.get(sessionNumber-1);
+    currentSession.printMapPlaces();
+    System.out.print("Введите номер ряда:");
+    int rowNumber = scanner.nextInt();
+    System.out.print("Введите номер места:");
+    int placeNumber = scanner.nextInt();
+    List<List<Integer>> currentPlaces = currentSession.getPlaces();
+    if(currentPlaces.get(rowNumber-1).get(placeNumber-1)==1){
+      System.out.println("Данное место уже продано! Попробуйте снова, "
+          + "или введите 0 для перехода в главное меню");
+    }else {
+      System.out.println();
+      System.out.println("Место на сеанс \n"+currentSession.toStringPretty()+"\nзабронировано успешно: ряд "+rowNumber+" номер места "+placeNumber);
+      System.out.println();
+      currentSession.reservePlaceInSession(rowNumber-1,  placeNumber-1);
+      try {
+        Files.writeObjectToFile(currentSession);
+      }catch (IOException exception){
+        throw new RuntimeException(exception.toString());
+      }catch (ParseException exception2){
+        throw new RuntimeException(exception2);
+      }
+      currentSession.printMapPlaces();
+    }
+
   }
 }
