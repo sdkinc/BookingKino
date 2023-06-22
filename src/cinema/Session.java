@@ -9,6 +9,8 @@ import java.util.Scanner;
 public class Session {
 
   private Film film;
+  private int id;
+  private static int maxId = 0;
   private Date dateStart;
   private List<List<Integer>> places;
   // Количество рядов в зале по умолчанию
@@ -20,6 +22,8 @@ public class Session {
     this.film = film;
     this.dateStart = dateStart;
     this.places = places;
+    this.id = maxId;
+    maxId++;
   }
 
   public Film getFilm() {
@@ -28,6 +32,10 @@ public class Session {
 
   public void setFilm(Film film) {
     this.film = film;
+  }
+
+  public static int getMaxId() {
+    return maxId;
   }
 
   public Date getDateStart() {
@@ -40,6 +48,10 @@ public class Session {
 
   public List<List<Integer>> getPlaces() {
     return places;
+  }
+
+  public int getId() {
+    return id;
   }
 
   public void setPlaces(List<List<Integer>> places) {
@@ -70,7 +82,7 @@ public class Session {
    * @return
    */
   public String toFile() {
-    return film.getId() + Constants.SEP +
+    return getId()+Constants.SEP+film.getId() + Constants.SEP +
         Constants.formatter.format(dateStart) + Constants.SEP +
         placesToText(places);
   }
@@ -86,7 +98,7 @@ public class Session {
       for (Integer integer : row) {
         result.append(integer);
       }
-      result.append(Constants.SEP_PLACES);
+      result.append(Constants.SEP_PLACES_FOR_WRITE);
     }
     result = new StringBuilder(result.substring(0, result.length() - 1));
     return result.toString();
@@ -158,10 +170,10 @@ public class Session {
    */
   static Session parseSessionFromString(String sessionString) throws ParseException {
     String[] strAfterSplit = sessionString.split(Constants.SEP);
-    Date dateSession = Constants.formatter.parse(strAfterSplit[1]);
-    Film film = Constants.cinema.getFilms().get(Integer.parseInt(strAfterSplit[0]));
+    Date dateSession = Constants.formatter.parse(strAfterSplit[2]);
+    Film film = Constants.cinema.getFilms().get(Integer.parseInt(strAfterSplit[1]));
     return new Session(film, dateSession,
-        readPlacesFromStringToListList(strAfterSplit[2]));
+        readPlacesFromStringToListList(strAfterSplit[3]));
   }
 
   /***
