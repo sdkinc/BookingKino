@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Session {
 
   private Film film;
-  private int id;
+  private final int id;
   private static int maxId = 0;
   private Date dateStart;
   private List<List<Integer>> places;
