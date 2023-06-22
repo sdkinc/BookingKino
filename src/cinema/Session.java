@@ -70,7 +70,7 @@ public class Session {
    * @return
    */
   public String toFile() {
-    return film + Constants.SEP +
+    return film.getId() + Constants.SEP +
         Constants.formatter.format(dateStart) + Constants.SEP +
         placesToText(places);
   }
