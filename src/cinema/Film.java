@@ -5,20 +5,33 @@ import java.util.Scanner;
 public class Film {
 
   private String name;
+  private int id;
   private String producer;
   private String genre;
   private int lengthInMin;
+
+  private static int maxId=0;
 
   public Film(String name, int lengthInMin) {
     this.name = name;
     this.lengthInMin = lengthInMin;
   }
 
-  public Film(String name, String producer, String genre, int lengthInMin) {
+  public Film(String name, String producer, String genre, int lengthInMin, int id) {
     this.name = name;
     this.producer = producer;
     this.genre = genre;
     this.lengthInMin = lengthInMin;
+    this.id = id;
+    maxId +=1;
+  }
+
+  public static int getMaxId() {
+    return maxId;
+  }
+
+  public int getId() {
+    return id;
   }
 
   public String getName() {
@@ -80,7 +93,7 @@ public class Film {
    */
   public String toFile() {
     String sep = Constants.SEP;
-    return name + sep + producer + sep + genre + sep + lengthInMin;
+    return name + sep + producer + sep + genre + sep + lengthInMin+sep+id;
   }
 
   /***
@@ -91,7 +104,7 @@ public class Film {
   public static Film parseFilmFromString(String filmString) {
     String[] strAfterSplit = filmString.split(Constants.SEP);
     return new Film(strAfterSplit[0], strAfterSplit[1], strAfterSplit[2],
-        Integer.parseInt(strAfterSplit[3]));
+        Integer.parseInt(strAfterSplit[3]), Integer.parseInt(strAfterSplit[4]));
   }
 
   /***
@@ -109,6 +122,6 @@ public class Film {
     String genreFilm = scanner.nextLine();
     System.out.print("Введите режиссера фильма:");
     String producerFilm = scanner.nextLine();
-    return new Film(nameFilm, producerFilm, genreFilm, lengthFilm);
+    return new Film(nameFilm, producerFilm, genreFilm, lengthFilm, Film.getMaxId()+1);
   }
 }
